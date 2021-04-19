@@ -78,7 +78,7 @@ console.log(isLoading);
 
   const hhtpGeneerator = (teachersIds,page,start) => {
       setIsLoading(true)
-    let url = `http://api.repetit.ru/public/teachers/short?`;
+    let url = `https://api.repetit.ru/public/teachers/short?`;
     let teenPerpage = teachersIds.slice(start,page)
     for (let i = 0; i < teenPerpage.length; i++) {
         url += `Ids=${String(teenPerpage[i])}&`;
@@ -91,7 +91,7 @@ console.log(isLoading);
   const fetchCities = async () => {
       
   
-    const { data } = await axios.get("http://api.repetit.ru/public/areas", {
+    const { data } = await axios.get("https://api.repetit.ru/public/areas", {
     
     });
     if (data.length > 0) {
@@ -104,7 +104,7 @@ console.log(isLoading);
   const fetchSubjects = async () => {
    
     const { data } = await axios.get(
-      "http://api.repetit.ru/public/subjects",
+      "https://api.repetit.ru/public/subjects",
       {}
     );
     if (data.length > 0) {
@@ -115,7 +115,7 @@ console.log(isLoading);
   const fetchDistricts = useCallback( async () => {
       
     const { data } = await axios.get(
-      "http://api.repetit.ru/public/districts?",
+      "https://api.repetit.ru/public/districts?",
       {
         params: { AreaId: city },
       }
@@ -130,7 +130,7 @@ console.log(isLoading);
     
     
     const { data } = await axios.get(
-      "http://api.repetit.ru/public/search/teacherIds?",
+      "https://api.repetit.ru/public/search/teacherIds?",
       {
         params: { AreaId: city, DistrictId: district, SubjectId: subject },
       }
