@@ -19,7 +19,7 @@ const AppProvider = ({ children }) => {
   const [start, setStart] = useState(0);
   const [subjectName, setsubjectName] = useState("");
   
-
+console.log(isLoading);
   const handleCity = (name) => {
     const selected = cities.filter((city) => city.cityName === name);
     const { id } = selected[0];
@@ -149,6 +149,7 @@ const AppProvider = ({ children }) => {
      
     }
   };
+  
 
   useEffect(() => {
     fetchSubjects();
