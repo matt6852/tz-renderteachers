@@ -12,8 +12,8 @@ const Search = () => {
     handleSubjects,
     handleDistricts,
     startLoading,
-    district,
     listOfTeachers,
+    teachersIds
   } = useGlobalContext();
 
   return (
@@ -70,7 +70,7 @@ const Search = () => {
             })}
           </select>
           <button
-            disabled={listOfTeachers.length > 0 || !district || !subject}
+            disabled={listOfTeachers.length > 0 || teachersIds.length<1 || !subject}
             onClick={() => startLoading}
             className="form-item-btn"
             type="submit"

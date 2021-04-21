@@ -20,7 +20,6 @@ const AppProvider = ({ children }) => {
 
   const startLoading = () => {
     setIsLoading(true);
-    console.log("hello");
   };
 
   const handleCity = (name) => {
