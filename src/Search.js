@@ -11,7 +11,6 @@ const Search = () => {
     handleSubmit,
     handleSubjects,
     handleDistricts,
-    isLoading,
     startLoading,
   } = useGlobalContext();
   

@@ -8,7 +8,6 @@ const Results = () => {
     teachersIds,
     handleapge,
     isLoading,
-    startLoading,
   } = useGlobalContext();
  
 
