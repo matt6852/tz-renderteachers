@@ -5,7 +5,7 @@ import axios from "axios";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [cities, setCities] = useState([]);
   const [city, setCity] = useState(null);
   const [district, setDistrict] = useState(null);
@@ -19,7 +19,13 @@ const AppProvider = ({ children }) => {
   const [start, setStart] = useState(0);
   const [subjectName, setsubjectName] = useState("");
   
-console.log(isLoading);
+
+  const startLoading =()=>{
+    setIsLoading(!isLoading)
+    console.log("hello");
+  }
+  
+
   const handleCity = (name) => {
     const selected = cities.filter((city) => city.cityName === name);
     const { id } = selected[0];
@@ -51,7 +57,7 @@ console.log(isLoading);
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchLIstOfTeahers(url)
-    setIsLoading(true)
+    startLoading()
      setStart(page);
      setPage(page + 10);
 
@@ -59,7 +65,8 @@ console.log(isLoading);
      
   };
   const handleapge = () => {
-      setIsLoading(true)
+      // setIsLoading(true)
+       setIsLoading(!isLoading);
       setStart(page);
       setPage(page + 10);
       hhtpGeneerator(teachersIds, page, start);
@@ -77,7 +84,7 @@ console.log(isLoading);
  
 
   const hhtpGeneerator = (teachersIds,page,start) => {
-      setIsLoading(true)
+      // setIsLoading(true)
     let url = `https://api.repetit.ru/public/teachers/short?`;
     let teenPerpage = teachersIds.slice(start,page)
     for (let i = 0; i < teenPerpage.length; i++) {
@@ -85,7 +92,7 @@ console.log(isLoading);
         
     }
     setUrl(url)
-   setIsLoading(false)
+  //  setIsLoading(false)
   };
 
   const fetchCities = async () => {
@@ -165,7 +172,7 @@ console.log(isLoading);
   
  useEffect(()=>{
    if(teachersIds.length > 0){
-       setIsLoading(false)
+      //  setIsLoading(false)
     hhtpGeneerator(teachersIds,page)
    }
  },[teachersIds,page,url])
@@ -175,6 +182,19 @@ console.log(isLoading);
        setIsLoading(false)
    }
  },[listOfTeachers])
+
+
+//  useEffect(()=>{
+//    if(districts && subjectName && teachersIds.length>0 ){
+//      setListOfTeahers([])
+//      setTeachersIds([])
+//       setSubjects(null)
+//       setDistricts(null)
+//       setCity(null)
+//      setUrl(null)
+     
+//    }
+//  },[subjectName, city, districts])
 
 
 
@@ -191,7 +211,9 @@ console.log(isLoading);
         handleDistricts,
         listOfTeachers,
         teachersIds,
-        subjectName,
+        subjectName, 
+        isLoading,
+        startLoading,
        
         
        

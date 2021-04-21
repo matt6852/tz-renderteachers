@@ -7,6 +7,8 @@ const Results = () => {
     subjectName,
     teachersIds,
     handleapge,
+    isLoading,
+    startLoading,
   } = useGlobalContext();
  
 
@@ -21,7 +23,6 @@ const Results = () => {
             teachingSubjects,
             id,
           } = teacher;
-         
 
           const { priceRemote } = teachingSubjects[0];
 
@@ -47,19 +48,21 @@ const Results = () => {
         })}
         <div className="center">
           {teachersIds.length > listOfTeachers.length ? (
-            <button className="form-item-btn-more" onClick={handleapge}>
+            <button
+              disabled={isLoading}
+              className="form-item-btn-more"
+              onClick={handleapge}
+            >
               {" "}
               Загрузить еще
             </button>
           ) : null}
         </div>
+        <div className={`${isLoading && "loader"}`}></div>;
       </main>
     );
   }
-  return (
-    <>
-    </>
-  );
+  return <div className={`${isLoading && "loader"}`}></div>;
 };
 
 export default Results;

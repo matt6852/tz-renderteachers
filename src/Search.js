@@ -12,6 +12,7 @@ const Search = () => {
     handleSubjects,
     handleDistricts,
     isLoading,
+    startLoading,
   } = useGlobalContext();
   
 
@@ -68,7 +69,12 @@ const Search = () => {
               );
             })}
           </select>
-          <button className="form-item-btn" disabled={isLoading} type="submit">
+          <button
+            onClick={()=> startLoading}
+            className="form-item-btn"
+            // disabled={isLoading}
+            type="submit"
+          >
             Применить фильтр
           </button>
         </form>
