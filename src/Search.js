@@ -12,6 +12,7 @@ const Search = () => {
     handleSubjects,
     handleDistricts,
     startLoading,
+    district,
   } = useGlobalContext();
   
 
@@ -69,7 +70,8 @@ const Search = () => {
             })}
           </select>
           <button
-            onClick={()=> startLoading}
+            disabled={!district} 
+            onClick={() => startLoading}
             className="form-item-btn"
             // disabled={isLoading}
             type="submit"
