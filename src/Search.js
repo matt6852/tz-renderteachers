@@ -1,9 +1,9 @@
 import React from "react";
 import { useGlobalContext } from "./Context";
 
-
 const Search = () => {
   const {
+    subject,
     cities,
     subjects,
     handleCity,
@@ -13,8 +13,8 @@ const Search = () => {
     handleDistricts,
     startLoading,
     district,
+    listOfTeachers,
   } = useGlobalContext();
-  
 
   return (
     <>
@@ -70,10 +70,9 @@ const Search = () => {
             })}
           </select>
           <button
-            disabled={!district} 
+            disabled={listOfTeachers.length > 0 || !district || !subject}
             onClick={() => startLoading}
             className="form-item-btn"
-            // disabled={isLoading}
             type="submit"
           >
             Применить фильтр

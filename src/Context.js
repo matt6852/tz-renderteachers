@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import axios from "axios";
 
-
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
@@ -18,13 +17,11 @@ const AppProvider = ({ children }) => {
   const [page, setPage] = useState(10);
   const [start, setStart] = useState(0);
   const [subjectName, setsubjectName] = useState("");
-  
 
-  const startLoading =()=>{
-    setIsLoading(!isLoading)
+  const startLoading = () => {
+    setIsLoading(true);
     console.log("hello");
-  }
-  
+  };
 
   const handleCity = (name) => {
     const selected = cities.filter((city) => city.cityName === name);
@@ -35,92 +32,62 @@ const AppProvider = ({ children }) => {
     const selected = subjects.filter((subject) => subject.name === str);
     const { id } = selected[0];
     const { name } = selected[0];
-    setsubjectName(name)
+    setsubjectName(name);
     setSubject(id);
-    if(district){
-         fetchIds();
+    if (district) {
+      fetchIds();
     }
   };
   const handleDistricts = (name) => {
-      
     const selected = districts.filter(
       (district) => district.verbatimName === name
     );
     const { id } = selected[0];
     setDistrict(id);
-    fetchIds()
-
-    
-   
+    fetchIds();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchLIstOfTeahers(url)
-    startLoading()
-     setStart(page);
-     setPage(page + 10);
-
-    
-     
+    fetchLIstOfTeahers(url);
+    startLoading();
+    setStart(page);
+    setPage(page + 10);
   };
   const handleapge = () => {
-      // setIsLoading(true)
-       setIsLoading(!isLoading);
-      setStart(page);
-      setPage(page + 10);
-      hhtpGeneerator(teachersIds, page, start);
-      
-      fetchLIstOfTeahers(url)
-      
+    setIsLoading(!isLoading);
+    setStart(page);
+    setPage(page + 10);
+    hhtpGeneerator(teachersIds, page, start);
 
-
-    
-     
+    fetchLIstOfTeahers(url);
   };
- 
 
-  
- 
-
-  const hhtpGeneerator = (teachersIds,page,start) => {
-      // setIsLoading(true)
+  const hhtpGeneerator = (teachersIds, page, start) => {
     let url = `https://api.repetit.ru/public/teachers/short?`;
-    let teenPerpage = teachersIds.slice(start,page)
+    let teenPerpage = teachersIds.slice(start, page);
     for (let i = 0; i < teenPerpage.length; i++) {
-        url += `Ids=${String(teenPerpage[i])}&`;
-        
+      url += `Ids=${String(teenPerpage[i])}&`;
     }
-    setUrl(url)
-  //  setIsLoading(false)
+    setUrl(url);
   };
 
   const fetchCities = async () => {
-      
-  
-    const { data } = await axios.get("https://api.repetit.ru/public/areas", {
-    
-    });
+    const { data } = await axios.get("https://api.repetit.ru/public/areas", {});
     if (data.length > 0) {
-        setCities(data);
-        
-        
+      setCities(data);
     }
-    
   };
   const fetchSubjects = async () => {
-   
     const { data } = await axios.get(
       "https://api.repetit.ru/public/subjects",
       {}
     );
     if (data.length > 0) {
-    
       setSubjects(data);
     }
   };
-  const fetchDistricts = useCallback( async () => {
-      
+  const fetchDistricts = useCallback(async () => {
     const { data } = await axios.get(
       "https://api.repetit.ru/public/districts?",
       {
@@ -128,14 +95,10 @@ const AppProvider = ({ children }) => {
       }
     );
     if (data.length > 0) {
-        setDistricts(data);
-    
-        
+      setDistricts(data);
     }
-  },[city]);
+  }, [city]);
   const fetchIds = async () => {
-    
-    
     const { data } = await axios.get(
       "https://api.repetit.ru/public/search/teacherIds?",
       {
@@ -143,25 +106,19 @@ const AppProvider = ({ children }) => {
       }
     );
     if (data.length > 0) {
-      
       setTeachersIds(data);
     }
   };
   const fetchLIstOfTeahers = async (url) => {
-
     const { data } = await axios.get(url);
     if (data.length > 0) {
-      
-      setListOfTeahers(data)
-     
+      setListOfTeahers(data);
     }
   };
-  
 
   useEffect(() => {
     fetchSubjects();
     fetchCities();
-   
   }, []);
 
   useEffect(() => {
@@ -169,35 +126,18 @@ const AppProvider = ({ children }) => {
       fetchDistricts();
     }
   }, [city, fetchDistricts]);
-  
- useEffect(()=>{
-   if(teachersIds.length > 0){
-      //  setIsLoading(false)
-    hhtpGeneerator(teachersIds,page)
-   }
- },[teachersIds,page,url])
 
- useEffect(()=>{
-   if(listOfTeachers.length > 0){
-       setIsLoading(false)
-   }
- },[listOfTeachers])
+  useEffect(() => {
+    if (teachersIds.length > 0) {
+      hhtpGeneerator(teachersIds, page);
+    }
+  }, [teachersIds, page, url]);
 
-
-//  useEffect(()=>{
-//    if(districts && subjectName && teachersIds.length>0 ){
-//      setListOfTeahers([])
-//      setTeachersIds([])
-//       setSubjects(null)
-//       setDistricts(null)
-//       setCity(null)
-//      setUrl(null)
-     
-//    }
-//  },[subjectName, city, districts])
-
-
-
+  useEffect(() => {
+    if (listOfTeachers.length > 0) {
+      setIsLoading(false);
+    }
+  }, [listOfTeachers]);
 
   return (
     <AppContext.Provider
@@ -211,16 +151,12 @@ const AppProvider = ({ children }) => {
         handleDistricts,
         listOfTeachers,
         teachersIds,
-        subjectName, 
+        subjectName,
         isLoading,
         startLoading,
         district,
-       
-        
-       
-       
+        subject,
         handleapge,
-        
       }}
     >
       {children}

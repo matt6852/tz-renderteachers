@@ -281,4 +281,6 @@ color: #009990;
 }
 .form-item-btn:disabled {
   cursor: not-allowed;
+  background: #adfdf8;
+  color: #000000;
 }
